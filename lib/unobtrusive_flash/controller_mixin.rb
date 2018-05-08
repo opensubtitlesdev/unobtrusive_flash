@@ -44,7 +44,8 @@ module UnobtrusiveFlash
       def sanitize_flash(flash, displayable_flash_keys)
         displayable_flash = flash.select { |key, value| displayable_flash_keys.include?(key.to_sym) }
         displayable_flash.map do |key, value|
-          html_safe_value = value.html_safe? ? value : ERB::Util.html_escape(value)
+        #  html_safe_value = value.html_safe? ? value : ERB::Util.html_escape(value)
+          html_safe_value=value.html_safe
           [key.to_s, html_safe_value]
         end
       end
