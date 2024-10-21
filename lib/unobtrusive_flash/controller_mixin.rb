@@ -1,4 +1,4 @@
-require 'active_support/core_ext/string/output_safety'
+require "active_support/core_ext/string/output_safety"
 
 module UnobtrusiveFlash
   module ControllerMixin
@@ -9,7 +9,8 @@ module UnobtrusiveFlash
       # TODO: replace configuration based on overriding methods with a conventional config block
       cookies[:flash] = {
         value: UnobtrusiveFlash::ControllerMixin.append_flash_to_cookie(cookies[:flash], flash, unobtrusive_flash_keys),
-        domain: unobtrusive_flash_domain
+        domain: unobtrusive_flash_domain,
+        same_site: :strict,
       }
       flash.discard
     end
@@ -44,8 +45,8 @@ module UnobtrusiveFlash
       def sanitize_flash(flash, displayable_flash_keys)
         displayable_flash = flash.select { |key, value| displayable_flash_keys.include?(key.to_sym) }
         displayable_flash.map do |key, value|
-        #  html_safe_value = value.html_safe? ? value : ERB::Util.html_escape(value)
-          html_safe_value=value.html_safe
+          #  html_safe_value = value.html_safe? ? value : ERB::Util.html_escape(value)
+          html_safe_value = value.html_safe
           [key.to_s, html_safe_value]
         end
       end
